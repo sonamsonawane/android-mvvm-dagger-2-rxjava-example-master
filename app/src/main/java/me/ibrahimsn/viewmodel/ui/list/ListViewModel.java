@@ -54,6 +54,8 @@ public class ListViewModel extends ViewModel {
 
     private void fetchRepos() {
         loading.setValue(true);
+        //todo
+        // add "offset" to request parametrs
         repoRepository.getSKUResponseSingle("a807b7ab-6cad-4aa6-87d0-e283a7353a0f",String.valueOf(10))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
