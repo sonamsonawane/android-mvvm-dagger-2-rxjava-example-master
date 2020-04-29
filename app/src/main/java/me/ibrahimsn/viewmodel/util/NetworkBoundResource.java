@@ -50,7 +50,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     @MainThread
     public NetworkBoundResource() {
-//        result.setValue(Resource.<ResultType>loading(null));
+        result.postValue(Resource.<ResultType>loading(null));
         final LiveData<ResultType> dbSource = loadFromDb();
         result.addSource(dbSource, new Observer<ResultType>() {
             @Override
