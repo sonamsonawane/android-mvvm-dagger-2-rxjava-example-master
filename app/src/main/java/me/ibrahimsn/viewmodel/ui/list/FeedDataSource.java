@@ -54,6 +54,9 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Record> callback) {
         ArrayList<Record> list = new ArrayList<Record>();
         Record record = new Record();
+        record.setId(200);
+        record.setQuarter("rr");
+        record.setVolumeOfMobileData("55555555");
         list.add(record);
         aboutCanadaRepository.insertAll(list);
         initialLoading.postValue(NetworkState.LOADING);

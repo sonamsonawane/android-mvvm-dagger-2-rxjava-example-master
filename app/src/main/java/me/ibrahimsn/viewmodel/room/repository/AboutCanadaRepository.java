@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.AsyncTask;
 
+
 import java.util.List;
 
 import me.ibrahimsn.viewmodel.data.model.Record;
@@ -31,5 +32,16 @@ public class AboutCanadaRepository {
 
     public LiveData<List<Record>> getAll() {
         return myDatabase.daoAboutCanada().getAll();
+    }
+
+    public void insert(Record record) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                myDatabase.daoAboutCanada().insert(record);
+                return null;
+            }
+        }.execute();
+
     }
 }

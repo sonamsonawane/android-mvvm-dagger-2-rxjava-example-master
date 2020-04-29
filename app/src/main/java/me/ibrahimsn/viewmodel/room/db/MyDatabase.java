@@ -7,9 +7,10 @@ import android.content.Context;
 
 
 import me.ibrahimsn.viewmodel.data.model.Record;
+import me.ibrahimsn.viewmodel.data.model.User;
 import me.ibrahimsn.viewmodel.room.dao.DaoAboutCanada;
 
-@Database(entities = {Record.class}, version = 1, exportSchema = false)
+@Database(entities = {Record.class, User.class}, version = 1)
 public abstract class MyDatabase extends RoomDatabase {
     private static String DB_NAME = "list_demo";
     private static volatile MyDatabase INSTANCE;
@@ -19,7 +20,7 @@ public abstract class MyDatabase extends RoomDatabase {
             synchronized (MyDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            MyDatabase.class, DB_NAME).fallbackToDestructiveMigration()
+                            MyDatabase.class, DB_NAME).allowMainThreadQueries()
                             .build();
                 }
             }

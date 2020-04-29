@@ -18,10 +18,13 @@ public interface DaoAboutCanada {
     LiveData<List<Record>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Record> brands);
+    void insertAll(List<Record> records);
 
     @Query("DELETE from Record")
     void deleteAll();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Record task);
 
 }
 

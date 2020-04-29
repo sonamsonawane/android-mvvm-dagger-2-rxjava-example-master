@@ -12,12 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import me.ibrahimsn.viewmodel.R;
 import me.ibrahimsn.viewmodel.base.BaseFragment;
+import me.ibrahimsn.viewmodel.data.model.Record;
 import me.ibrahimsn.viewmodel.data.model.Repo;
+import me.ibrahimsn.viewmodel.room.repository.AboutCanadaRepository;
 import me.ibrahimsn.viewmodel.ui.detail.DetailsViewModel;
 import me.ibrahimsn.viewmodel.util.ViewModelFactory;
 import me.ibrahimsn.viewmodel.ui.detail.DetailsFragment;
@@ -49,8 +53,12 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
         listView.addItemDecoration(new DividerItemDecoration(getBaseActivity(), DividerItemDecoration.VERTICAL));
         listView.setAdapter(new RepoListAdapter(viewModel, this, this));
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
+        AboutCanadaRepository aboutCanadaRepository = new AboutCanadaRepository(application);
+        Record record = new Record();
+        record.setId(200);
+        record.setQuarter("rr");
+        record.setVolumeOfMobileData("55555555");
+        aboutCanadaRepository.insert(record);
 //        observableViewModel();
     }
 
