@@ -8,6 +8,7 @@ import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class ListViewModel extends ViewModel {
 
     private void init() {
         executor = Executors.newFixedThreadPool(5);
-        FeedDataFactory feedDataFactory = new FeedDataFactory( application,repoRepository);
+        FeedDataFactory feedDataFactory = new FeedDataFactory(application, repoRepository);
         networkState = Transformations.switchMap(feedDataFactory.getMutableLiveData(),
                 dataSource -> dataSource.getNetworkState());
 
@@ -62,7 +63,7 @@ public class ListViewModel extends ViewModel {
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
                         .setInitialLoadSizeHint(10)
-                        .setPageSize(10).build();
+                        .setPageSize(20).build();
 
         articleLiveData = (new LivePagedListBuilder(feedDataFactory, pagedListConfig))
                 .setFetchExecutor(executor)

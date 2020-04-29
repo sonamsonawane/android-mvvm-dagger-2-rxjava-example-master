@@ -1,25 +1,19 @@
 package me.ibrahimsn.viewmodel.ui.list;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import me.ibrahimsn.viewmodel.data.model.NetworkRecords;
 import me.ibrahimsn.viewmodel.data.model.Record;
 import me.ibrahimsn.viewmodel.data.rest.RepoRepository;
-import me.ibrahimsn.viewmodel.dto.ApiResponse;
-import me.ibrahimsn.viewmodel.dto.Resource;
 import me.ibrahimsn.viewmodel.room.repository.AboutCanadaRepository;
-import me.ibrahimsn.viewmodel.util.NetworkBoundResource;
 import me.ibrahimsn.viewmodel.util.NetworkState;
 
 public class FeedDataSource extends PageKeyedDataSource<Integer, Record> implements BaseConstants {
@@ -58,7 +52,6 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
         record.setQuarter("rr");
         record.setVolumeOfMobileData("55555555");
         list.add(record);
-        aboutCanadaRepository.insertAll(list);
         initialLoading.postValue(NetworkState.LOADING);
         networkState.postValue(NetworkState.LOADING);
         /*LiveData<Resource<List<Record>>> data = new NetworkBoundResource<List<Record>, List<Record>>() {
@@ -120,7 +113,7 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
 
                     @Override
                     public void onSuccess(NetworkRecords result) {
-                        callback.onResult(result.getResult().getRecords(), 0, params.requestedLoadSize);
+                        callback.onResult(result.getResult().getRecords(), 0, 1);
                         initialLoading.postValue(NetworkState.LOADED);
                         networkState.postValue(NetworkState.LOADED);
                     }
@@ -144,7 +137,7 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params,
                           @NonNull LoadCallback<Integer, Record> callback) {
-        Log.i(TAG, "Loading Rang " + params.key + " Count " + params.requestedLoadSize);
+        Log.e(TAG, "Loading Rang " + params.key + " Count " + params.requestedLoadSize);
         networkState.postValue(NetworkState.LOADING);
         repoRepository.getSKUResponseSingle(API_KEY, params.requestedLoadSize, params.key)
 //                .subscribeOn(Schedulers.io())

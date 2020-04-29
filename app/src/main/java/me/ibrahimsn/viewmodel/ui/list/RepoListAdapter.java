@@ -49,10 +49,11 @@ public class RepoListAdapter extends PagedListAdapter<Record, RepoListAdapter.Re
         holder.bind(data.get(position));
     }
 
-    @Override
+   /* @Override
     public int getItemCount() {
+        super.getItemCount();
         return data.size();
-    }
+    }*/
 
     @Override
     public long getItemId(int position) {

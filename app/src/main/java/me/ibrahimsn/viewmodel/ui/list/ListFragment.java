@@ -40,6 +40,7 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
     private ListViewModel viewModel;
     @Inject
     Application application;
+    private FeedListAdapter adapter;
 
     @Override
     protected int layoutRes() {
@@ -50,17 +51,20 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ListViewModel.class);
 
-        listView.addItemDecoration(new DividerItemDecoration(getBaseActivity(), DividerItemDecoration.VERTICAL));
-        listView.setAdapter(new RepoListAdapter(viewModel, this, this));
+//        listView.addItemDecoration(new DividerItemDecoration(getBaseActivity(), DividerItemDecoration.VERTICAL));
+//        listView.setAdapter(new RepoListAdapter(viewModel, this, this));
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
-        AboutCanadaRepository aboutCanadaRepository = new AboutCanadaRepository(application);
-        Record record = new Record();
-        record.setId(200);
-        record.setQuarter("rr");
-        record.setVolumeOfMobileData("55555555");
-        aboutCanadaRepository.insert(record);
+        adapter = new FeedListAdapter(getActivity().getApplicationContext());
+        viewModel.getArticleLiveData().observe(this, pagedList -> {
+            adapter.submitList(pagedList);
+        });
+
+        viewModel.getNetworkState().observe(this, networkState -> {
+            adapter.setNetworkState(networkState);
+        });
+
+        listView.setAdapter(adapter);
 //        observableViewModel();
-        Log.e("onViewCreated: ", aboutCanadaRepository.getAll().getValue() + "");
     }
 
     @Override
