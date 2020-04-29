@@ -1,6 +1,7 @@
 package me.ibrahimsn.viewmodel.ui.list;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,14 +18,15 @@ import me.ibrahimsn.viewmodel.R;
 import me.ibrahimsn.viewmodel.data.model.Record;
 import me.ibrahimsn.viewmodel.data.model.Repo;
 
-public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.RepoViewHolder>{
+public class RepoListAdapter extends PagedListAdapter<Record, RepoListAdapter.RepoViewHolder> {
 
     private RepoSelectedListener repoSelectedListener;
     private final List<Record> data = new ArrayList<>();
 
     RepoListAdapter(ListViewModel viewModel, LifecycleOwner lifecycleOwner, RepoSelectedListener repoSelectedListener) {
+        super(Record.DIFF_CALLBACK);
         this.repoSelectedListener = repoSelectedListener;
-        viewModel.getRecords().observe(lifecycleOwner, records -> {
+        viewModel.getArticleLiveData().observe(lifecycleOwner, records -> {
             data.clear();
             if (records != null) {
                 data.addAll(records);
@@ -40,6 +42,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.RepoVi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_repo_list_item, parent, false);
         return new RepoViewHolder(view, repoSelectedListener);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RepoViewHolder holder, int position) {
@@ -58,10 +61,14 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.RepoVi
 
     static final class RepoViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_repo_name) TextView repoNameTextView;
-        @BindView(R.id.tv_repo_description) TextView repoDescriptionTextView;
-        @BindView(R.id.tv_forks) TextView forksTextView;
-        @BindView(R.id.tv_stars) TextView starsTextView;
+        @BindView(R.id.tv_repo_name)
+        TextView repoNameTextView;
+        @BindView(R.id.tv_repo_description)
+        TextView repoDescriptionTextView;
+        @BindView(R.id.tv_forks)
+        TextView forksTextView;
+        @BindView(R.id.tv_stars)
+        TextView starsTextView;
 
         private Record repo;
 

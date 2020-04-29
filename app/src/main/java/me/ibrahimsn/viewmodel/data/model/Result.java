@@ -23,7 +23,7 @@ public class Result {
     private Integer limit;
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private long total;
 
     public String getResourceId() {
         return resourceId;
@@ -65,7 +65,7 @@ public class Result {
         this.limit = limit;
     }
 
-    public Integer getTotal() {
+    public long getTotal() {
         return total;
     }
 

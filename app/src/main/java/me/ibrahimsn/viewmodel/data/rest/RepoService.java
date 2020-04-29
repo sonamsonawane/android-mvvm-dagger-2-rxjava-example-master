@@ -20,9 +20,10 @@ public interface RepoService {
     Single<Repo> getRepo(@Path("owner") String owner, @Path("name") String name);
 
     @POST("datastore_search")
-    Observable<NetworkRecords> getFilterList(
+    Single<NetworkRecords> getFilterList(
             @Query("resource_id") String resource_id,
-            @Query("limit") String limit
+            @Query("limit") int limit,
+            @Query("offset") long offset
     );
 
 }

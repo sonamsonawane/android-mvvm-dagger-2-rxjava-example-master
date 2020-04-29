@@ -27,7 +27,7 @@ public class RepoRepository {
         return repoService.getRepo(owner, name);
     }
 
-    public Observable<NetworkRecords> getSKUResponseSingle(String resource_id , String limit){
-        return repoService.getFilterList(resource_id, limit);
+    public Single<NetworkRecords> getSKUResponseSingle(String resource_id, int limit, long offset) {
+        return repoService.getFilterList(resource_id, limit, offset);
     }
 }

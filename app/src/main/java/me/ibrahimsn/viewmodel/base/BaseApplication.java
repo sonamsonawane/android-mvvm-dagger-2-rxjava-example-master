@@ -7,6 +7,8 @@ import me.ibrahimsn.viewmodel.di.component.DaggerApplicationComponent;
 
 public class BaseApplication extends DaggerApplication {
 
+    private static ApplicationComponent component;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -14,9 +16,13 @@ public class BaseApplication extends DaggerApplication {
 
     @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        ApplicationComponent component = DaggerApplicationComponent.builder().application(this).build();
+         component = DaggerApplicationComponent.builder().application(this).build();
         component.inject(this);
 
+        return component;
+    }
+
+    public static ApplicationComponent getComponent() {
         return component;
     }
 }

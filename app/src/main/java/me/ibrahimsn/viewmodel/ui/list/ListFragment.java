@@ -1,5 +1,6 @@
 package me.ibrahimsn.viewmodel.ui.list;
 
+import android.app.Application;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,11 +26,16 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView listView;
-    @BindView(R.id.tv_error) TextView errorTextView;
-    @BindView(R.id.loading_view) View loadingView;
+    @BindView(R.id.tv_error)
+    TextView errorTextView;
+    @BindView(R.id.loading_view)
+    View loadingView;
 
-    @Inject ViewModelFactory viewModelFactory;
+    @Inject
+    ViewModelFactory viewModelFactory;
     private ListViewModel viewModel;
+    @Inject
+    Application application;
 
     @Override
     protected int layoutRes() {
@@ -44,8 +51,7 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-
-        observableViewModel();
+//        observableViewModel();
     }
 
     @Override
@@ -58,21 +64,21 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
 
     private void observableViewModel() {
         viewModel.getRepos().observe(this, repos -> {
-            if(repos != null) listView.setVisibility(View.VISIBLE);
+            if (repos != null) listView.setVisibility(View.VISIBLE);
         });
 
         viewModel.getNetworkRecords().observe(this, networkRecords -> {
-            if (networkRecords.getResult().getRecords().size() > 0){
+            if (networkRecords.getResult().getRecords().size() > 0) {
                 listView.setVisibility(View.VISIBLE);
             }
         });
 
         viewModel.getError().observe(this, isError -> {
-            if (isError != null) if(isError) {
+            if (isError != null) if (isError) {
                 errorTextView.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
                 errorTextView.setText("An Error Occurred While Loading Data!");
-            }else {
+            } else {
                 errorTextView.setVisibility(View.GONE);
                 errorTextView.setText(null);
             }
