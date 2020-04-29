@@ -61,7 +61,7 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
         aboutCanadaRepository.insertAll(list);
         initialLoading.postValue(NetworkState.LOADING);
         networkState.postValue(NetworkState.LOADING);
-        LiveData<Resource<List<Record>>> data = new NetworkBoundResource<List<Record>, List<Record>>() {
+        /*LiveData<Resource<List<Record>>> data = new NetworkBoundResource<List<Record>, List<Record>>() {
             @Override
             protected void saveCallResult(@NonNull List<Record> items) {
                 aboutCanadaRepository.insertAll(items);
@@ -108,8 +108,8 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
                         });
                 return response;
             }
-        }.getAsLiveData();
-        /*repoRepository.getSKUResponseSingle(API_KEY, params.requestedLoadSize, 1)
+        }.getAsLiveData();*/
+        repoRepository.getSKUResponseSingle(API_KEY, params.requestedLoadSize, 1)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<NetworkRecords>() {
@@ -130,7 +130,7 @@ public class FeedDataSource extends PageKeyedDataSource<Integer, Record> impleme
                         initialLoading.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
                         networkState.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
                     }
-                });*/
+                });
 
     }
 

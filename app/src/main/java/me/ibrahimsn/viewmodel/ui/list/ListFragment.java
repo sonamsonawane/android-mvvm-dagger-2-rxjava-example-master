@@ -60,6 +60,7 @@ public class ListFragment extends BaseFragment implements RepoSelectedListener {
         record.setVolumeOfMobileData("55555555");
         aboutCanadaRepository.insert(record);
 //        observableViewModel();
+        Log.e("onViewCreated: ", aboutCanadaRepository.getAll().getValue() + "");
     }
 
     @Override
